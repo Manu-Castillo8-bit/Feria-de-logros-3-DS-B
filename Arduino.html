@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuatro luces. Un sensor. Cero interruptores.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;600;800&family=Fira+Code:wght@400;500&display=swap">
+<style>
+:root{--bg:#F6F3FF;--panel:#fff;--ink:#1A1642;--mut:#55527A;--line:#D9D3F5;--chip:#E8E3FB;--link:#4B2FD6;--night:#0B0E38;--amber:#FFC21A;--pink:#FF4D94;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E0C26;--panel:#171438;--ink:#EEEBFF;--mut:#AFAAD6;--line:#2D2A5E;--chip:#231F4F;--link:#A99BFF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E0C26;--panel:#171438;--ink:#EEEBFF;--mut:#AFAAD6;--line:#2D2A5E;--chip:#231F4F;--link:#A99BFF;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.06rem/1.6 'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--night);z-index:10}
+.hero{background:radial-gradient(ellipse at 20% 0,#1E2490 0,var(--night) 60%);color:#F3F1FF;padding:44px 20px 40px}
+.in{max-width:860px;margin:0 auto}
+main{max-width:780px;margin:0 auto;padding:8px 20px 64px}
+h1{font:700 clamp(1.6rem,6vw,3.2rem)/1.12 'Unbounded',system-ui,sans-serif;letter-spacing:-.02em;margin:0 0 18px}
+h1 span{display:block;color:#F3F1FF;animation:lit .5s both}
+h1 span:nth-child(1){--c:#E9C46A;animation-delay:.3s}
+h1 span:nth-child(2){--c:#E88FB4;animation-delay:.9s}
+h1 span:nth-child(3){--c:#DAD8F5;animation-delay:1.5s}
+@keyframes lit{from{color:#3A3F96}to{color:var(--c)}}
+h2{font:800 1.4rem/1.2 'Unbounded',system-ui,sans-serif;letter-spacing:-.01em;margin:52px 0 18px}
+p{margin:0 0 12px;max-width:62ch}
+.lead{font-size:1.15rem;color:#C9C6F0;margin-bottom:26px}
+code{font-family:'Fira Code',ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:var(--chip);padding:.1em .35em;border-radius:5px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.hall{position:relative;height:240px;border-radius:20px;overflow:hidden;background:linear-gradient(#070924 0,#0F1250 60%,#1B1F7A 60%,#141862 100%);border:1px solid #2B30A0}
+.pirdev{position:absolute;left:14px;top:12px;font-size:.78rem;color:#C9C6F0;display:flex;align-items:center;gap:8px}
+.pd{position:relative;width:22px;height:22px;border-radius:50%;background:#2A2E7A;border:2px solid #4A50C0;transition:.1s}
+.pd.hi{background:var(--pink);border-color:#FFB3D1;box-shadow:0 0 16px 4px rgba(255,77,148,.7)}
+.pd.hi::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--pink);animation:ping 1s infinite}
+@keyframes ping{to{transform:scale(2.6);opacity:0}}
+.lamps{position:absolute;inset:34px 0 auto 18%;display:flex;justify-content:space-around}
+.lamp{position:relative;width:64px;display:flex;flex-direction:column;align-items:center;font-size:.74rem;color:#9CA0E6}
+.b{width:24px;height:24px;border-radius:50%;background:#2A2E7A;border:2px solid #4A50C0;transition:.08s;z-index:1}
+.cone{position:absolute;top:22px;left:50%;width:150px;height:150px;margin-left:-75px;background:linear-gradient(rgba(255,194,26,.6),rgba(255,194,26,0) 90%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);opacity:0;transition:opacity .15s}
+.lamp.on .b{background:var(--amber);border-color:#FFE08A;box-shadow:0 0 26px 8px rgba(255,194,26,.6)}
+.lamp.on .cone{opacity:1}
+.lamp small{margin-top:3px;z-index:1}
+.walker{position:absolute;bottom:8px;left:0;width:30px;height:52px;z-index:2}.walker svg{display:block;width:100%;height:100%;overflow:visible}.walker line{stroke:#E4E2FF;stroke-width:5;stroke-linecap:round}.walk .l1{animation:sw .45s ease-in-out infinite alternate}.walk .l2{animation:sw .45s ease-in-out infinite alternate-reverse}@keyframes sw{from{transform:rotate(-26deg)}to{transform:rotate(26deg)}}
+.row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0}
+.go{background:var(--amber);color:#1A1642;border:0;border-radius:999px;padding:13px 24px;font-weight:800;box-shadow:0 6px 0 #B98A00}
+.go:active{transform:translateY(4px);box-shadow:0 2px 0 #B98A00}
+.cap{display:flex;justify-content:space-between;font-size:.9rem;color:#C9C6F0;margin-bottom:6px}
+.bar{height:10px;border-radius:99px;background:#1B1F7A;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--amber)}
+.rd{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.rd div{background:#151A66;border-radius:12px;padding:10px 12px}
+.rd b{display:block;font:500 1.25rem 'Fira Code',ui-monospace,monospace}
+.rd span{font-size:.8rem;color:#C9C6F0}
+.set{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.set label{display:block;font-size:.88rem;color:#C9C6F0}
+.set b{color:#fff}
+.set input{width:100%;accent-color:var(--amber)}
+ol{padding:0;list-style:none;max-width:64ch;margin:0}
+ol li{counter-increment:s;position:relative;padding:0 0 22px 58px}
+ol{counter-reset:s}
+ol li::before{content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;background:var(--amber);color:#1A1642;font:800 1rem 'Unbounded',sans-serif;display:grid;place-items:center;box-shadow:0 0 18px rgba(255,194,26,.55)}
+ol li:not(:last-child)::after{content:"";position:absolute;left:18px;top:42px;bottom:2px;width:2px;background:linear-gradient(var(--amber),transparent)}
+.tw{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{color:var(--mut);font-weight:600}
+.note{margin-top:10px;color:var(--mut);font-size:.95rem}
+.codehead{display:flex;justify-content:space-between;align-items:center;background:#0B0E38;color:#9CA0E6;border-radius:14px 14px 0 0;padding:8px 8px 8px 16px;font:.85rem 'Fira Code',ui-monospace,monospace}
+.cp{background:var(--amber);color:#1A1642;border:0;border-radius:8px;padding:6px 14px;font-weight:600}
+pre{margin:0;background:#0B0E38;color:#E4E2FF;border-radius:0 0 14px 14px;padding:16px;overflow-x:auto;font:400 .86rem/1.65 'Fira Code',ui-monospace,Menlo,Consolas,monospace}
+pre .c{color:#8D92D9}pre .k{color:#FFC21A}pre .f{color:#6FE3D0}pre .u{color:#C9A7FF}pre .n{color:#FF8FB8}
+@media (prefers-reduced-motion:reduce){h1 span{animation:none;color:var(--c)}.walk .l1,.walk .l2{animation:none}.pd.hi::after{animation:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="in">
+<h1><span>Cuatro luces.</span><span>Un sensor.</span><span>Cero interruptores.</span></h1>
+<p class="lead">Un sensor detecta que alguien pasa y los LEDs se encienden uno tras otro. Haz caminar al personaje y mira qué hace el código en cada momento.</p>
+
+<div class="hall" aria-label="Simulador de pasillo">
+  <div class="pirdev"><span class="pd" id="dot"></span>PIR, pin 4</div>
+  <div class="lamps" id="lamps"></div>
+  <div class="walker" id="w"><svg viewBox="0 0 30 52" aria-hidden="true"><circle cx="15" cy="7" r="6" fill="#E4E2FF"/><path d="M21 5l4 2.5-4 2.5z" fill="#E4E2FF"/><line x1="15" y1="14" x2="15" y2="32"/><line class="l2" style="transform-origin:15px 18px;stroke-width:4" x1="15" y1="18" x2="15" y2="30"/><line class="l1" style="transform-origin:15px 18px;stroke-width:4" x1="15" y1="18" x2="15" y2="30"/><line class="l1" style="transform-origin:15px 32px" x1="15" y1="32" x2="15" y2="50"/><line class="l2" style="transform-origin:15px 32px" x1="15" y1="32" x2="15" y2="50"/></svg></div>
+</div>
+<div class="row"><button class="go" id="go">Caminar por el pasillo</button></div>
+<div class="cap"><span>Tiempo restante antes de apagarse</span><span id="rest">0.0 s</span></div>
+<div class="bar"><i id="bar"></i></div>
+<div class="rd">
+  <div><b id="rP">LOW</b><span>digitalRead(PIR)</span></div>
+  <div><b id="rA">false</b><span>activo</span></div>
+  <div><b id="rE">0</b><span>encendidos</span></div>
+</div>
+<div class="set">
+  <label>PASO_ENCENDER: <b id="vE"></b><input type="range" id="sE" min="100" max="1000" step="50" value="300"></label>
+  <label>PASO_APAGAR: <b id="vA"></b><input type="range" id="sA" min="50" max="600" step="50" value="150"></label>
+  <label>TIEMPO_ENCENDIDO: <b id="vT"></b><input type="range" id="sT" min="2000" max="20000" step="1000" value="10000"></label>
+</div>
+</div></header>
+
+<main>
+<h2>Qué pasa cuando alguien se acerca</h2>
+<ol>
+  <li><b>Detecta.</b> El sensor PIR nota movimiento y manda una señal <code>HIGH</code> al pin 4.</li>
+  <li><b>Recuerda.</b> El programa anota la hora y pone <code>activo</code> en <code>true</code>. Así sigue funcionando aunque el sensor solo avise un instante.</li>
+  <li><b>Enciende en cascada.</b> Mientras <code>activo</code> sea verdadero, prende un LED cada <code>PASO_ENCENDER</code>, del pin 5 al 8.</li>
+  <li><b>Renueva.</b> Si alguien se vuelve a mover, la hora anotada se actualiza y la cuenta atrás empieza de cero.</li>
+  <li><b>Apaga.</b> Pasado <code>TIEMPO_ENCENDIDO</code> sin movimiento, <code>activo</code> vuelve a <code>false</code> y los LEDs se apagan de derecha a izquierda, más rápido.</li>
+</ol>
+
+<h2>Conexiones</h2>
+<div class="tw"><table>
+<tr><th>Pieza</th><th>Se conecta a</th></tr>
+<tr><td>Sensor PIR, señal (OUT)</td><td>Pin 4</td></tr>
+<tr><td>Sensor PIR, VCC y GND</td><td>5V y GND</td></tr>
+<tr><td>LEDs 1 a 4, pata larga</td><td>Pines 5, 6, 7 y 8</td></tr>
+<tr><td>LEDs 1 a 4, pata corta</td><td>GND, con una resistencia de unos 220 Ω cada uno</td></tr>
+</table></div>
+<p class="note">Muchos sensores PIR necesitan cerca de un minuto después de encenderse para calibrarse. Si al principio se activa solo, espera un poco.</p>
+
+<h2>El código completo</h2>
+<div class="codehead"><span>pasillo_leds.ino</span><button class="cp" id="cp">Copiar código</button></div>
+<pre><code id="code"></code></pre>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const P={E:300,A:150,T:10000};
+const CODE=`// 4 LEDs en cascada activados por un sensor PIR
+
+const int PIR = 4;
+const int LEDS[] = {5, 6, 7, 8};
+const int NUM_LEDS = 4;
+
+// ====== AJUSTES (en milisegundos) ======
+const unsigned long PASO_ENCENDER = @E@;       // tiempo entre LED y LED al encender
+const unsigned long PASO_APAGAR = @A@;         // tiempo entre LED y LED al apagar
+const unsigned long TIEMPO_ENCENDIDO = @T@;  // cuánto se quedan prendidos tras la última detección
+// =======================================
+
+int encendidos = 0;
+bool activo = false;
+unsigned long ultimoPaso = 0;
+unsigned long ultimaDeteccion = 0;
+
+void setup()
+{
+  pinMode(PIR, INPUT);
+  for (int i = 0; i < NUM_LEDS; i++) {
+    pinMode(LEDS[i], OUTPUT);
+    digitalWrite(LEDS[i], LOW);
+  }
+}
+
+void loop()
+{
+  unsigned long ahora = millis();
+
+  if (digitalRead(PIR) == HIGH) {
+    ultimaDeteccion = ahora;
+    activo = true;
+  }
+
+  if (activo && (ahora - ultimaDeteccion >= TIEMPO_ENCENDIDO)) {
+    activo = false;
+  }
+
+  // Velocidad distinta según se encienda o se apague
+  unsigned long intervalo = activo ? PASO_ENCENDER : PASO_APAGAR;
+
+  if (ahora - ultimoPaso >= intervalo) {
+    ultimoPaso = ahora;
+
+    if (activo && encendidos < NUM_LEDS) {
+      digitalWrite(LEDS[encendidos], HIGH);
+      encendidos++;
+    }
+    else if (!activo && encendidos > 0) {
+      encendidos--;
+      digitalWrite(LEDS[encendidos], LOW);
+    }
+  }
+}
+`;
+let plain='';
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function paintCode(){
+  plain=CODE.replace('@E@',P.E).replace('@A@',P.A).replace('@T@',P.T);
+  $('code').innerHTML=esc(plain).replace(/(\/\/.*)|\b(const|int|bool|unsigned|long|void|if|else|for|true|false)\b|\b(pinMode|digitalWrite|digitalRead|millis|setup|loop)\b|\b(INPUT|OUTPUT|HIGH|LOW)\b|\b(\d+)\b/g,
+    (m,c,k,f,u,n)=>'<span class="'+(c?'c':k?'k':f?'f':u?'u':'n')+'">'+m+'</span>');
+}
+[['sE','E'],['sA','A'],['sT','T']].forEach(([id,k])=>{
+  const el=$(id),upd=()=>{P[k]=+el.value;$('v'+k).textContent=el.value+' ms';paintCode();};
+  el.oninput=upd;upd();
+});
+$('cp').onclick=async()=>{
+  try{await navigator.clipboard.writeText(plain);}
+  catch(e){const r=document.createRange();r.selectNodeContents($('code'));const s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');}catch(_){}}
+  $('cp').textContent='¡Copiado!';setTimeout(()=>$('cp').textContent='Copiar código',1800);
+};
+
+const pins=[5,6,7,8];
+$('lamps').innerHTML=pins.map(p=>'<div class="lamp"><div class="cone"></div><div class="b"></div><small>pin '+p+'</small></div>').join('');
+const lamps=[...document.querySelectorAll('.lamp')];
+let encendidos=0,activo=false,ultimoPaso=0,ultimaDet=0,pirUntil=0;
+let wFrom=0,wTo=0,wStart=-1e9,WALK=3000,wx=0,face=1;
+$('go').onclick=()=>{
+  const n=performance.now();
+  if(n-wStart<WALK)return;
+  wFrom=wx;wTo=wx<.5?1:0;face=wTo?1:-1;wStart=n;pirUntil=n+WALK;
+};
+function tick(){
+  const ahora=performance.now(),pir=ahora<pirUntil,walking=ahora-wStart<WALK;
+  if(walking){wx=wFrom+(wTo-wFrom)*Math.min(1,(ahora-wStart)/WALK);}
+  $('w').style.left=(wx*92)+'%';
+  $('w').style.transform='translateY('+(walking?Math.sin(ahora/90)*3:0)+'px) scaleX('+face+')';$('w').classList.toggle('walk',walking);
+  if(pir){ultimaDet=ahora;activo=true;}
+  if(activo&&ahora-ultimaDet>=P.T)activo=false;
+  const iv=activo?P.E:P.A;
+  if(ahora-ultimoPaso>=iv){
+    ultimoPaso=ahora;
+    if(activo&&encendidos<pins.length){lamps[encendidos].classList.add('on');encendidos++;}
+    else if(!activo&&encendidos>0){encendidos--;lamps[encendidos].classList.remove('on');}
+  }
+  const left=activo?Math.max(0,P.T-(ahora-ultimaDet)):0;
+  $('bar').style.width=(left/P.T*100)+'%';
+  $('rest').textContent=(left/1000).toFixed(1)+' s';
+  $('dot').classList.toggle('hi',pir);
+  $('rP').textContent=pir?'HIGH':'LOW';
+  $('rA').textContent=activo;
+  $('rE').textContent=encendidos;
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

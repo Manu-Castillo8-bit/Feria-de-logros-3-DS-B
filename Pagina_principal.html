@@ -1,0 +1,1020 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mis Proyectos | Tercero de Desarrollo de Software B</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --fondo: #090816;
+            --morado: #b36bff;
+            --azul: #3f9dff;
+            --turquesa: #35e9cf;
+            --rosa: #ff78c8;
+            --texto: #f7f5ff;
+            --secundario: #aaa6c5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--texto);
+            background: var(--fondo);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        /* FONDO ANIMADO */
+
+        .fondo-luces {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at 15% 20%, #38206a50, transparent 40%),
+                radial-gradient(ellipse at 85% 30%, #123d6850, transparent 38%),
+                radial-gradient(ellipse at 50% 100%, #31114c45, transparent 45%),
+                #090816;
+        }
+
+        .luz {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: .35;
+            animation: flotar 10s ease-in-out infinite alternate;
+        }
+
+        .luz-1 {
+            top: 8%;
+            left: -130px;
+            background: #8c35ff;
+        }
+
+        .luz-2 {
+            top: 30%;
+            right: -150px;
+            background: #087bff;
+            animation-delay: -4s;
+        }
+
+        .luz-3 {
+            bottom: -180px;
+            left: 40%;
+            background: #e040fb;
+            animation-delay: -6s;
+        }
+
+        @keyframes flotar {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+            to {
+                transform: translate(55px, -35px) scale(1.2);
+            }
+        }
+
+        /* CABECERA */
+
+        header {
+            width: 100%;
+            padding: 22px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            border-bottom: 1px solid #ffffff12;
+            background: #090816b8;
+            backdrop-filter: blur(18px);
+        }
+
+        .marca {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            color: white;
+            background: linear-gradient(135deg, #a855f7, #3478ff);
+            box-shadow: 0 0 28px #864bff55;
+        }
+
+        .marca-texto strong {
+            display: block;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .marca-texto span {
+            display: block;
+            margin-top: 3px;
+            color: var(--secundario);
+            font-size: 11px;
+        }
+
+        .estado {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 16px;
+            border: 1px solid #36f5d035;
+            border-radius: 30px;
+            color: #9fffea;
+            background: #36f5d00b;
+            font-size: 11px;
+            letter-spacing: .7px;
+        }
+
+        .punto {
+            width: 7px;
+            height: 7px;
+            background: var(--turquesa);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--turquesa);
+        }
+
+        /* PRESENTACIÓN */
+
+        main {
+            width: min(1160px, 88%);
+            margin: auto;
+        }
+
+        .hero {
+            padding: 90px 0 55px;
+            text-align: center;
+        }
+
+        .etiqueta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border: 1px solid #a855f750;
+            border-radius: 30px;
+            background: #a855f710;
+            color: #d8b9ff;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: aparecer .8s ease both;
+        }
+
+        .estrella {
+            color: #d6a5ff;
+            font-size: 15px;
+        }
+
+        h1 {
+            margin: 27px auto 22px;
+            max-width: 1000px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(34px, 5.6vw, 67px);
+            line-height: 1.25;
+            font-weight: 800;
+            letter-spacing: -2px;
+            overflow-wrap: anywhere;
+            animation: aparecer .9s ease both;
+        }
+
+        .degradado {
+            color: transparent;
+            background: linear-gradient(
+                100deg,
+                #c49aff 5%,
+                #8d78ff 35%,
+                #55c8ff 70%,
+                #5df5d9 100%
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .descripcion {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--secundario);
+            font-size: 15px;
+            line-height: 1.9;
+            animation: aparecer 1s ease both;
+        }
+
+        .linea-decorativa {
+            width: 100px;
+            height: 3px;
+            margin: 32px auto 0;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #a855f7, #38bdf8, #36f5d0);
+            box-shadow: 0 0 18px #9b5cff80;
+        }
+
+        /* SECCIÓN DE PROYECTOS */
+
+        .seccion-proyectos {
+            padding: 25px 0 75px;
+        }
+
+        .encabezado-proyectos {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .encabezado-proyectos h2 {
+            font-size: clamp(24px, 3vw, 34px);
+            font-weight: 700;
+        }
+
+        .encabezado-proyectos p {
+            margin-top: 10px;
+            color: var(--secundario);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .botones {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        /* TARJETAS / BOTONES */
+
+        .boton {
+            --color: #b36bff;
+
+            position: relative;
+            isolation: isolate;
+            min-width: 0;
+            min-height: 210px;
+            padding: 28px;
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            text-align: left;
+            color: white;
+
+            border: 1px solid color-mix(
+                in srgb, var(--color) 38%, transparent
+            );
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    125deg,
+                    color-mix(in srgb, var(--color) 13%, #100e25),
+                    #111022 75%
+                );
+
+            box-shadow: 0 15px 40px #00000020;
+            cursor: default;
+
+            animation: aparecer .8s ease both;
+
+            transition:
+                transform .35s ease,
+                border-color .35s ease,
+                box-shadow .35s ease;
+        }
+
+        .boton:nth-child(2) {
+            animation-delay: .1s;
+        }
+
+        .boton:nth-child(3) {
+            animation-delay: .2s;
+        }
+
+        .boton:nth-child(4) {
+            animation-delay: .3s;
+        }
+
+        .boton:nth-child(5) {
+            animation-delay: .4s;
+        }
+
+        .boton-1 {
+            --color: #b36bff;
+        }
+
+        .boton-2 {
+            --color: #3f9dff;
+        }
+
+        .boton-3 {
+            --color: #35e9cf;
+        }
+
+        .boton-4 {
+            --color: #ff78c8;
+        }
+
+        .boton-5 {
+            --color: #ffb84d;
+        }
+
+        /* La 5.ª tarjeta queda sola en su fila: se centra con el mismo ancho */
+        .boton-5 {
+            grid-column: 1 / -1;
+            justify-self: center;
+            width: calc(50% - 12px);
+        }
+
+        .boton::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            width: 180px;
+            height: 180px;
+            top: -100px;
+            right: -65px;
+            border-radius: 50%;
+            background: var(--color);
+            filter: blur(65px);
+            opacity: .27;
+            transition: opacity .35s, transform .35s;
+        }
+
+        .boton::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: -120%;
+            width: 65%;
+            height: 100%;
+            transform: skewX(-20deg);
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #ffffff12,
+                transparent
+            );
+            transition: left .7s ease;
+            pointer-events: none;
+        }
+
+        .boton:hover {
+            transform: translateY(-7px);
+            border-color: var(--color);
+            box-shadow:
+                0 18px 45px #00000045,
+                0 0 28px color-mix(
+                    in srgb, var(--color) 20%, transparent
+                );
+        }
+
+        .boton:hover::before {
+            opacity: .48;
+            transform: scale(1.3);
+        }
+
+        .boton:hover::after {
+            left: 150%;
+        }
+
+        .boton:focus-visible {
+            outline: 2px solid var(--color);
+            outline-offset: 5px;
+        }
+
+        /* ICONOS */
+
+        .icono {
+            flex-shrink: 0;
+            width: 78px;
+            height: 78px;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+
+            border: 1px solid color-mix(
+                in srgb, var(--color) 55%, transparent
+            );
+
+            background: color-mix(
+                in srgb, var(--color) 15%, #100e25
+            );
+
+            box-shadow: inset 0 0 25px #ffffff05;
+            transition: transform .35s ease;
+        }
+
+        .icono svg {
+            width: 39px;
+            height: 39px;
+            stroke: var(--color);
+            filter: drop-shadow(0 0 8px var(--color));
+        }
+
+        .boton:hover .icono {
+            transform: rotate(-5deg) scale(1.06);
+        }
+
+        /* TEXTOS DE LOS PROYECTOS */
+
+        .contenido-boton {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .numero {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 1.7;
+            letter-spacing: 1.5px;
+        }
+
+        .contenido-boton h3 {
+            margin-bottom: 10px;
+            font-size: clamp(18px, 2vw, 23px);
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .contenido-boton p {
+            color: var(--secundario);
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .flecha {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            align-self: flex-end;
+            border: 1px solid #ffffff1b;
+            border-radius: 50%;
+            color: var(--color);
+            font-size: 19px;
+            transition: transform .3s ease;
+        }
+
+        .boton:hover .flecha {
+            transform: translate(4px, -4px);
+        }
+
+        /* MENSAJE INFERIOR */
+
+        .mensaje {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 65px;
+            padding: 22px;
+            border: 1px solid #ffffff10;
+            border-radius: 16px;
+            background: #ffffff04;
+            text-align: center;
+        }
+
+        .mensaje-icono {
+            color: #b99aff;
+            font-size: 21px;
+        }
+
+        .mensaje p {
+            color: #c7c3dc;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .mensaje strong {
+            color: white;
+        }
+
+        /* PIE DE PÁGINA */
+
+        footer {
+            padding: 27px 6%;
+            border-top: 1px solid #ffffff12;
+            background: #070611b8;
+            text-align: center;
+        }
+
+        footer p {
+            color: #85819f;
+            font-size: 11px;
+            line-height: 2;
+        }
+
+        footer strong {
+            color: #b7a0ff;
+            font-weight: 600;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* TABLETAS Y CELULARES */
+
+        @media (max-width: 850px) {
+            main {
+                width: 90%;
+            }
+
+            .boton {
+                padding: 22px 18px;
+                gap: 15px;
+            }
+
+            .icono {
+                width: 62px;
+                height: 62px;
+                border-radius: 18px;
+            }
+
+            .icono svg {
+                width: 31px;
+                height: 31px;
+            }
+
+            .contenido-boton p {
+                font-size: 11px;
+            }
+
+            .flecha {
+                width: 29px;
+                height: 29px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            header {
+                padding: 16px 5%;
+            }
+
+            .marca {
+                gap: 9px;
+            }
+
+            .marca-texto strong {
+                font-size: 10px;
+                letter-spacing: .5px;
+            }
+
+            .marca-texto span {
+                font-size: 9px;
+            }
+
+            .logo {
+                width: 41px;
+                height: 41px;
+                border-radius: 12px;
+                font-size: 17px;
+            }
+
+            .estado {
+                padding: 8px 10px;
+                font-size: 9px;
+            }
+
+            main {
+                width: 90%;
+            }
+
+            .hero {
+                padding: 65px 0 45px;
+            }
+
+            .etiqueta {
+                font-size: 9px;
+                letter-spacing: 1px;
+                padding: 9px 12px;
+            }
+
+            h1 {
+                font-size: clamp(30px, 8vw, 46px);
+                letter-spacing: -1px;
+            }
+
+            .descripcion {
+                font-size: 13px;
+            }
+
+            .botones {
+                grid-template-columns: 1fr;
+                gap: 17px;
+            }
+
+            .boton-5 {
+                width: 100%;
+            }
+
+            .boton {
+                min-height: 170px;
+                padding: 22px 18px;
+                gap: 15px;
+            }
+
+            .icono {
+                width: 63px;
+                height: 63px;
+            }
+
+            .contenido-boton h3 {
+                font-size: 19px;
+            }
+
+            .numero {
+                font-size: 9px;
+            }
+
+            .contenido-boton p {
+                font-size: 12px;
+            }
+
+            .seccion-proyectos {
+                padding-bottom: 50px;
+            }
+
+            .mensaje {
+                margin-bottom: 45px;
+            }
+        }
+
+        @media (max-width: 370px) {
+            .estado {
+                font-size: 8px;
+                gap: 6px;
+            }
+
+            .marca-texto strong {
+                max-width: 150px;
+                font-size: 9px;
+            }
+
+            .boton {
+                padding: 19px 13px;
+                gap: 11px;
+            }
+
+            .icono {
+                width: 51px;
+                height: 51px;
+                border-radius: 15px;
+            }
+
+            .icono svg {
+                width: 27px;
+                height: 27px;
+            }
+
+            .contenido-boton h3 {
+                font-size: 17px;
+            }
+
+            .contenido-boton p {
+                font-size: 11px;
+            }
+
+            .flecha {
+                width: 25px;
+                height: 25px;
+                font-size: 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FONDO CON LUCES -->
+    <div class="fondo-luces" aria-hidden="true">
+        <div class="luz luz-1"></div>
+        <div class="luz luz-2"></div>
+        <div class="luz luz-3"></div>
+    </div>
+
+    <!-- CABECERA -->
+    <header>
+        <div class="marca">
+            <div class="logo">B.</div>
+
+            <div class="marca-texto">
+                <strong>DESARROLLO DE SOFTWARE</strong>
+                <span>TERCERO · SECCIÓN B</span>
+            </div>
+        </div>
+
+        <div class="estado">
+            <span class="punto"></span>
+            MIS PROYECTOS
+        </div>
+    </header>
+
+    <main>
+
+        <!-- PRESENTACIÓN -->
+        <section class="hero">
+
+            <div class="etiqueta">
+                <span class="estrella">✦</span>
+                CREATIVIDAD · TECNOLOGÍA · INNOVACIÓN
+                <span class="estrella">✦</span>
+            </div>
+
+            <h1>
+                BIENVENIDOS A<br>
+                <span class="degradado">TERCERO DE</span><br>
+                DESARROLLO DE SOFTWARE
+                <span class="degradado">“B”</span>
+            </h1>
+
+            <p class="descripcion">
+                Cada proyecto representa una nueva idea, un desafío y una
+                oportunidad para innovar. Explora nuestras creaciones:
+                aplicaciones inteligentes, comercio electrónico y juegos
+                diseñados para combinar tecnología, creatividad y diversión.
+            </p>
+
+            <div class="linea-decorativa"></div>
+
+        </section>
+
+        <!-- PROYECTOS -->
+        <section class="seccion-proyectos">
+
+            <div class="encabezado-proyectos">
+                <h2>Explora mis <span class="degradado">proyectos</span></h2>
+
+                <p>
+                    Cinco ideas diferentes, creadas para resolver problemas,
+                    facilitar tareas y disfrutar de la tecnología.
+                </p>
+            </div>
+
+            <div class="botones">
+
+                <!-- PROYECTO 1: MYPROFILE -->
+                <button
+                    type="button"
+                    class="boton boton-1"
+                    aria-label="Proyecto MyProfile, botón de prueba"
+                    title="Botón de prueba"
+                >
+                    <div class="icono">
+                        <svg viewBox="0 0 24 24" fill="none"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <rect x="4" y="3" width="16" height="18" rx="3"/>
+                            <circle cx="12" cy="8" r="2.5"/>
+                            <path d="M8 15c1.5-2.5 6.5-2.5 8 0"/>
+                            <path d="m15 18 1.5 1.5L20 16"/>
+                        </svg>
+                    </div>
+
+                    <div class="contenido-boton">
+                        <span class="numero">01 / ORGANIZACIÓN INTELIGENTE</span>
+
+                        <h3>MyProfile</h3>
+
+                        <p>
+                            Tu vida organizada en un solo lugar. Gestiona tu
+                            salud, controla tus tareas, administra tus ahorros
+                            y protege tus contraseñas desde una sola aplicación.
+                        </p>
+                    </div>
+
+                    <span class="flecha" aria-hidden="true">↗</span>
+                </button>
+
+                <!-- PROYECTO 2: ASISTENTE IA -->
+                <button
+                    type="button"
+                    class="boton boton-2"
+                    aria-label="Proyecto Asistente IA, botón de prueba"
+                    title="Botón de prueba"
+                >
+                    <div class="icono">
+                        <svg viewBox="0 0 24 24" fill="none"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <rect x="4" y="7" width="16" height="13" rx="4"/>
+                            <path d="M12 3v4"/>
+                            <path d="M9 12h.01M15 12h.01"/>
+                            <path d="M9 16h6"/>
+                            <path d="M2 11v5M22 11v5"/>
+                            <path d="m18 2 1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>
+                        </svg>
+                    </div>
+
+                    <div class="contenido-boton">
+                        <span class="numero">02 / INTELIGENCIA ARTIFICIAL</span>
+
+                        <h3>Asistente IA</h3>
+
+                        <p>
+                            Un agente de inteligencia artificial que te recuerda
+                            tus tareas pendientes. Está vinculado con MyProfile
+                            para ayudarte a organizar tus actividades y tu tiempo.
+                        </p>
+                    </div>
+
+                    <span class="flecha" aria-hidden="true">↗</span>
+                </button>
+
+                <!-- PROYECTO 3: MAGI DELI -->
+                <button
+                    type="button"
+                    class="boton boton-3"
+                    aria-label="Proyecto Magi Deli, botón de prueba"
+                    title="Botón de prueba"
+                >
+                    <div class="icono">
+                        <svg viewBox="0 0 24 24" fill="none"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M3 10h18l-2 11H5L3 10Z"/>
+                            <path d="M2 10 5 4h14l3 6"/>
+                            <path d="M8 4 7 10M16 4l1 6"/>
+                            <path d="M9 15h6M12 13v4"/>
+                            <path d="M8 21v-3h8v3"/>
+                        </svg>
+                    </div>
+
+                    <div class="contenido-boton">
+                        <span class="numero">03 / COMERCIO ELECTRÓNICO</span>
+
+                        <h3>Magi Deli</h3>
+
+                        <p>
+                            Una tienda virtual enfocada en un restaurante,
+                            desarrollada con PrestaShop. Un espacio digital
+                            para presentar productos y facilitar la experiencia
+                            de compra de los clientes.
+                        </p>
+                    </div>
+
+                    <span class="flecha" aria-hidden="true">↗</span>
+                </button>
+
+                <!-- PROYECTO 4: AJEDREZ Y DAMAS -->
+                <button
+                    type="button"
+                    class="boton boton-4"
+                    aria-label="Proyecto Ajedrez y Damas, botón de prueba"
+                    title="Botón de prueba"
+                >
+                    <div class="icono">
+                        <svg viewBox="0 0 24 24" fill="none"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M8 3h8l-1 5 3 3v2H6v-2l3-3-1-5Z"/>
+                            <path d="M6 13h12l2 5H4l2-5Z"/>
+                            <path d="M4 21h16M7 18v3M17 18v3"/>
+                            <circle cx="12" cy="5" r="1"/>
+                        </svg>
+                    </div>
+
+                    <div class="contenido-boton">
+                        <span class="numero">04 / JUEGOS Y ESTRATEGIA</span>
+
+                        <h3>Ajedrez y Damas</h3>
+
+                        <p>
+                            Un espacio para disfrutar partidas de ajedrez y
+                            damas, poner a prueba tu pensamiento estratégico
+                            y divertirte con cada movimiento.
+                        </p>
+                    </div>
+
+                    <span class="flecha" aria-hidden="true">↗</span>
+                </button>
+
+                <!-- PROYECTO 5: SENSOR DE MOVIMIENTO CON ARDUINO -->
+                <button
+                    type="button"
+                    class="boton boton-5"
+                    aria-label="Proyecto Sensor de Movimiento LED con Arduino, botón de prueba"
+                    title="Botón de prueba"
+                >
+                    <div class="icono">
+                        <svg viewBox="0 0 24 24" fill="none"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M9 16v-.3c0-.9-.5-1.6-1.1-2.3a5.5 5.5 0 1 1 8.2 0c-.6.7-1.1 1.4-1.1 2.3v.3Z"/>
+                            <path d="M10 19h4M11 21.5h2"/>
+                            <path d="M3.5 7.5c-1 1.6-1 3.4 0 5"/>
+                            <path d="M20.5 7.5c1 1.6 1 3.4 0 5"/>
+                        </svg>
+                    </div>
+
+                    <div class="contenido-boton">
+                        <span class="numero">05 / ELECTRÓNICA Y ARDUINO</span>
+
+                        <h3>Sensor de Movimiento LED</h3>
+
+                        <p>
+                            Un proyecto con Arduino que detecta movimiento
+                            mediante un sensor y enciende luces LED de forma
+                            automática. Une electrónica y programación para
+                            crear iluminación inteligente.
+                        </p>
+                    </div>
+
+                    <span class="flecha" aria-hidden="true">↗</span>
+                </button>
+
+            </div>
+        </section>
+
+        <!-- MENSAJE FINAL -->
+        <section class="mensaje">
+            <span class="mensaje-icono">✧</span>
+
+            <p>
+                <strong>Imagina. Diseña. Programa.</strong><br>
+                Cada gran proyecto comienza con una idea.
+            </p>
+
+            <span class="mensaje-icono">✧</span>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>
+            Creado con creatividad y tecnología ·
+            <strong>Tercero de Desarrollo de Software “B”</strong>
+        </p>
+
+        <p>© 2026 · Todos los derechos reservados</p>
+    </footer>
+
+</body>
+</html>
