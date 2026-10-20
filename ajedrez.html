@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajedrez y Damas — descarga el programa o juega en línea</title>
+<meta name="description" content="Un programa para Windows con ajedrez y damas. Descárgalo en .exe o juega directamente desde el navegador.">
+<!--
+  PERSONALIZA ESTO:
+  1) Botón "Descargar .exe": cambia href="juego.exe" por la ruta/URL de tu archivo.
+  2) Botón "Jugar en línea": actualizado a http://ajedrez-2026.somee.com/
+-->
+<style>
+
+  
+:root{
+  --bg:#f2f4f7; --panel:#ffffff; --ink:#17212e; --muted:#4d5b6c; --line:#cfd7e1;
+  --sq-l:#e4e9f0; --sq-d:#5e7896; --accent:#b8322a; --accent-ink:#ffffff;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121a24; --panel:#1a2430; --ink:#e8edf3; --muted:#a4b3c4; --line:#2b3848;
+    --sq-l:#c9d3df; --sq-d:#49617c; --accent:#e9c71a; --accent-ink:#040404;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121a24; --panel:#1a2430; --ink:#e8edf3; --muted:#a4b3c4; --line:#2b3848;
+  --sq-l:#c9d3df; --sq-d:#49617c; --accent:#d9534b; --accent-ink:#ffffff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{font-family:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;line-height:1.1;margin:0;letter-spacing:-.01em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+header{padding:22px 0}
+.brand{font-family:Georgia,serif;font-weight:700;font-size:20px;display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand i{font-style:normal;font-size:26px}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:32px 0 72px}
+.hero h1{font-size:clamp(38px,5.4vw,64px);margin-bottom:20px}
+.hero p.lead{font-size:19px;color:var(--muted);max-width:34em;margin:0 0 30px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 24px;border-radius:10px;font:600 17px/1 system-ui,sans-serif;text-decoration:none;border:2px solid var(--accent);transition:transform .15s,background .15s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.note{font-size:14px;color:var(--muted);margin:18px 0 0;max-width:36em}
+
+/* TABLEROS */
+.board{container-type:inline-size;display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;width:100%;border:8px solid var(--ink);border-radius:6px;overflow:hidden;box-shadow:0 18px 40px -18px rgba(0,0,0,.45)}
+.sq{display:grid;place-items:center;background:var(--sq-l);font-size:9.6cqw;line-height:1}
+.sq.d{background:var(--sq-d)}
+.pc{font-family:"Segoe UI Symbol","Noto Sans Symbols 2","Apple Symbols",serif}
+.pc.w{color:#fff;text-shadow:0 0 1px #000,0 0 2px #000,0 2px 3px rgba(0,0,0,.5)}
+.pc.b{color:#161b23;text-shadow:0 1px 1px rgba(255,255,255,.25)}
+.disc{width:68%;aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 .8cqw rgba(255,255,255,.28),0 .8cqw 1.2cqw rgba(0,0,0,.35)}
+.disc.r{background:#c23a30}
+.disc.n{background:#1b2029}
+
+/* SECCIONES */
+section{padding:72px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(30px,4vw,44px);margin-bottom:14px}
+section .sub{color:var(--muted);max-width:38em;margin:0 0 44px}
+.games{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.game{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px}
+.game .board{max-width:340px;margin:0 0 24px;border-width:6px;box-shadow:none}
+.game h3{font-size:28px;margin-bottom:8px}
+.game p{margin:0;color:var(--muted)}
+
+.ways{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.way{border-left:4px solid var(--accent);padding:4px 0 4px 24px}
+.way h3{font-size:26px;margin-bottom:10px}
+.way p{margin:0 0 16px;color:var(--muted)}
+.way ol{margin:0 0 24px;padding-left:22px;color:var(--muted)}
+.way li{margin-bottom:4px}
+
+footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--muted);font-size:14px}
+
+@media (max-width:820px){
+  .hero,.games,.ways{grid-template-columns:1fr}
+  .hero{gap:36px;padding-bottom:56px}
+  .hero .board{max-width:420px}
+  .btn{flex:1 1 220px;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#"><i aria-hidden="true">♞</i> Ajedrez y Damas</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <h1>Ajedrez y damas, en un solo programa.</h1>
+      <p class="lead">Es un programa para Windows con dos juegos clásicos de tablero. Cualquiera puede jugar: descárgalo en tu computadora o ábrelo directamente desde el navegador.</p>
+      <div class="btns">
+        <a class="btn primary" href="juego.exe" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+          Descargar .exe
+        </a>
+        <a class="btn ghost" href="http://ajedrez-2026.somee.com/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 001.5.86l12-7.5a1 1 0 000-1.72l-12-7.5A1 1 0 007 4.5z"/></svg>
+          Jugar en línea
+        </a>
+      </div>
+      <p class="note">Si Windows muestra una advertencia al abrir el archivo, elige «Más información» y luego «Ejecutar de todas formas».</p>
+    </div>
+    <div class="board" id="hero-board" role="img" aria-label="Tablero de ajedrez con una partida en curso"></div>
+  </div>
+
+  <section id="juegos">
+    <div class="wrap">
+      <h2>Dos juegos, un solo programa</h2>
+      <p class="sub">Abre el programa y elige a qué quieres jugar. Sin cuentas ni configuraciones complicadas.</p>
+      <div class="games">
+        <article class="game">
+          <div class="board" id="chess-mini" role="img" aria-label="Tablero de ajedrez en posición inicial"></div>
+          <h3>Ajedrez</h3>
+          <p>El juego de estrategia más famoso del mundo. Mueve tus piezas, protege al rey y da jaque mate al rival.</p>
+        </article>
+        <article class="game">
+          <div class="board" id="checkers-mini" role="img" aria-label="Tablero de damas en posición inicial"></div>
+          <h3>Damas</h3>
+          <p>Un clásico fácil de aprender. Salta sobre las fichas contrarias, captura y corona tus damas.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="jugar">
+    <div class="wrap">
+      <h2>Elige cómo jugar</h2>
+      <p class="sub">Usa el programa en tu computadora o juega ahora mismo desde cualquier navegador.</p>
+      <div class="ways">
+        <div class="way">
+          <h3>En tu computadora</h3>
+          <ol>
+            <li>Descarga el archivo .exe.</li>
+            <li>Ábrelo con doble clic.</li>
+            <li>Elige ajedrez o damas y empieza.</li>
+          </ol>
+          <a class="btn primary" href="juego.exe" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+            Descargar .exe
+          </a>
+        </div>
+        <div class="way">
+          <h3>En el navegador</h3>
+          <p>No necesitas descargar nada. Abre el juego en mi hosting y juega desde tu computadora, tablet o celular.</p>
+          <a class="btn ghost" href="http://ajedrez-2026.somee.com/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 001.5.86l12-7.5a1 1 0 000-1.72l-12-7.5A1 1 0 007 4.5z"/></svg>
+            Jugar en línea
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Ajedrez y Damas, hecho por NEXO. Hecho para que cualquiera pueda jugar.</div>
+</footer>
+
+<script>
+(function(){
+  var G={k:"\u265A",q:"\u265B",r:"\u265C",b:"\u265D",n:"\u265E",p:"\u265F"};
+  function chess(id,fen){
+    var el=document.getElementById(id),rows=fen.split("/"),h="";
+    rows.forEach(function(row,r){
+      var c=0;
+      row.split("").forEach(function(ch){
+        if(/\d/.test(ch)){
+          for(var i=0;i<+ch;i++){h+='<div class="sq'+((r+c)%2?' d':'')+'"></div>';c++;}
+        }else{
+          var side=ch===ch.toUpperCase()?'w':'b';
+          h+='<div class="sq'+((r+c)%2?' d':'')+'"><span class="pc '+side+'">'+G[ch.toLowerCase()]+'\uFE0E</span></div>';c++;
+        }
+      });
+    });
+    el.innerHTML=h;
+  }
+  function checkers(id){
+    var el=document.getElementById(id),h="";
+    for(var r=0;r<8;r++)for(var c=0;c<8;c++){
+      var dark=(r+c)%2===1,d="";
+      if(dark&&r<3)d='<span class="disc n"></span>';
+      if(dark&&r>4)d='<span class="disc r"></span>';
+      h+='<div class="sq'+(dark?' d':'')+'">'+d+'</div>';
+    }
+    el.innerHTML=h;
+  }
+  chess("hero-board","r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2N2N2/PPPP1PPP/R1BQK2R");
+  chess("chess-mini","rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+  checkers("checkers-mini");
+})();
+</script>
+</body>
+</html>
