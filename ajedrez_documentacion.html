@@ -85,11 +85,55 @@ a:hover{text-decoration:underline}
 }
 .nav a:hover{color:var(--txt);background:var(--panel);text-decoration:none}
 .nav a.active{color:#0b1226;background:linear-gradient(120deg,var(--gold),var(--gold2));font-weight:700}
+.font-group{display:flex;align-items:center;gap:5px;margin-left:auto;flex:none}
+.font-btn{
+  width:34px;height:34px;border:1px solid var(--panel-b);background:var(--panel);color:var(--txt);
+  border-radius:999px;cursor:pointer;font-size:.9rem;font-weight:800;line-height:1;flex:none
+}
+.font-btn:hover{border-color:var(--gold);color:var(--gold)}
+.font-btn[disabled]{opacity:.4;cursor:not-allowed}
+.font-lvl{font-size:.74rem;color:var(--txt2);min-width:46px;text-align:center}
 .theme-btn{
-  margin-left:auto;border:1px solid var(--panel-b);background:var(--panel);color:var(--txt);
+  border:1px solid var(--panel-b);background:var(--panel);color:var(--txt);
   border-radius:999px;padding:7px 14px;cursor:pointer;font-size:.85rem;flex:none
 }
 .theme-btn:hover{border-color:var(--gold)}
+
+/* ---------- ACCESIBILIDAD ---------- */
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:1000;
+  background:linear-gradient(120deg,var(--gold),var(--gold2));color:#0b1226;
+  padding:12px 20px;border-radius:0 0 12px 0;font-weight:700
+}
+.skip:focus{left:0}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+
+/* ---------- DICCIONARIO ---------- */
+.gsearch{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0 4px}
+.gsearch input{
+  flex:1;min-width:250px;padding:13px 20px;border-radius:999px;font-size:1rem;
+  border:1px solid var(--panel-b);background:var(--panel);color:var(--txt);font-family:inherit
+}
+.gsearch input::placeholder{color:var(--txt2);opacity:.9}
+.gsearch input:focus{border-color:var(--gold);outline:none}
+.gcount{font-size:.85rem;color:var(--txt2)}
+.item.hide{display:none}
+.steps{display:grid;gap:10px;counter-reset:s}
+.step{
+  display:flex;gap:14px;align-items:flex-start;background:var(--panel);
+  border:1px solid var(--panel-b);border-radius:14px;padding:14px 16px
+}
+.step::before{
+  counter-increment:s;content:counter(s);
+  flex:none;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;
+  background:linear-gradient(140deg,var(--gold),var(--gold2));color:#0b1226;font-weight:800;font-size:.9rem
+}
+.step b{color:var(--txt)}
+.step span{display:block;font-size:.88rem;color:var(--txt2)}
 
 /* ---------- SECTIONS ---------- */
 section{padding:64px 0 10px;scroll-margin-top:70px}
@@ -102,7 +146,7 @@ section{padding:64px 0 10px;scroll-margin-top:70px}
 h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.5px}
 h3{font-size:1.15rem;margin:26px 0 10px;color:var(--gold2)}
 body.light h3{color:#a06e00}
-p.lead{color:var(--txt2);max-width:850px;margin-bottom:18px}
+p.lead{color:var(--txt2);max-width:850px;margin-bottom:18px;font-size:1.06rem}
 .card{
   background:var(--panel);border:1px solid var(--panel-b);border-radius:var(--radius);
   padding:22px;margin:16px 0;backdrop-filter:blur(6px);box-shadow:var(--shadow)
@@ -113,7 +157,7 @@ p.lead{color:var(--txt2);max-width:850px;margin-bottom:18px}
 .grid.c4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
 .item{background:var(--panel);border:1px solid var(--panel-b);border-radius:14px;padding:16px 18px}
 .item h4{font-size:.98rem;margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.item p{font-size:.88rem;color:var(--txt2)}
+.item p{font-size:.93rem;color:var(--txt2);line-height:1.65}
 code,.mono{
   font-family:"Cascadia Code",Consolas,"Courier New",monospace;
   background:rgba(110,168,255,.13);border:1px solid rgba(110,168,255,.22);
@@ -152,7 +196,7 @@ body.light pre.tree{background:#0f1730;color:#dbe6ff}
 .l4{background:linear-gradient(90deg,rgba(192,132,252,.14),transparent)}
 .l5{background:linear-gradient(90deg,rgba(244,114,182,.14),transparent)}
 
-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:.95rem;margin:14px 0}
 th,td{border-bottom:1px solid var(--panel-b);padding:11px 12px;text-align:left;vertical-align:top}
 th{color:var(--gold);font-size:.8rem;text-transform:uppercase;letter-spacing:.6px}
 td{color:var(--txt2)}
@@ -181,6 +225,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
 </head>
 <body>
 <div class="progress" id="progress"></div>
+<a class="skip" href="#contenido">Saltar al contenido principal</a>
 
 <header class="hero">
   <div class="wrap">
@@ -219,16 +264,32 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
     <a href="#instalar">Cómo se instala</a>
     <a href="#curiosidades">Curiosidades</a>
     <a href="#mejoras">Mejoras posibles</a>
+    <a href="#diccionario">Diccionario</a>
+    <div class="font-group">
+      <button class="font-btn" id="fontDown" type="button" aria-label="Letra más pequeña">A−</button>
+      <span class="font-lvl" id="fontLvl" aria-live="polite">100%</span>
+      <button class="font-btn" id="fontUp" type="button" aria-label="Letra más grande">A+</button>
+    </div>
     <button class="theme-btn" id="themeBtn" type="button">☀️ Modo claro</button>
   </div>
 </nav>
 
-<main class="wrap">
+<main class="wrap" id="contenido">
 
 <!-- ============ 1. RESUMEN ============ -->
 <section id="inicio" class="reveal">
   <div class="sec-head"><div class="ic">📖</div><h2>1. Qué es este proyecto, explicado fácil</h2></div>
   <p class="lead">Este repositorio (carpeta de trabajo) contiene <b>dos programas distintos que hacen lo mismo</b>: un juego de ajedrez y damas con usuarios, partidas guardadas, ranking y panel de administración.</p>
+
+  <div class="card">
+    <h4 style="margin-bottom:12px">🧭 ¿Nunca has programado? Empieza por aquí</h4>
+    <div class="steps">
+      <div class="step"><div><b>Lee solo esta sección (sección 1).</b><span>Con entender que hay dos versiones del mismo juego (una para instalar y otra para el navegador) ya tienes lo esencial.</span></div></div>
+      <div class="step"><div><b>Salta a la sección 2 si alguna palabra te confunde.</b><span>La sección 2 es un glosario de términos técnicos explicados en palabras simples. No hace falta leerla de corrido: búscala cuando la necesites.</span></div></div>
+      <div class="step"><div><b>Si quieres ver cómo se siente usar el programa, ve a la sección 4.</b><span>Ahí está el recorrido pantalla por pantalla: primero el inicio de sesión, luego el menú y después el tablero.</span></div></div>
+    </div>
+    <p style="font-size:.9rem;color:var(--txt2);margin-top:12px"><b style="color:var(--gold)">Tranquilo:</b> no hace falta leer la página entera ni memorizar nada. Cada sección se entiende por separado, y al final hay un <a href="#diccionario">diccionario con búsqueda</a> para resolver cualquier palabra suelta.</p>
+  </div>
 
   <div class="grid c2">
     <div class="item">
@@ -245,7 +306,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
     </div>
     <div class="item">
       <h4>🤖 Stockfish <span class="tag t-purple">el rival inteligente</span></h4>
-      <p>Stockfish es un motor de ajedrez gratuito y de código abierto, uno de los más fuertes del mundo. El programa lo descarga solo y lo usa para que puedas jugar <b>contra la computadora</b> en 4 niveles de dificultad.</p>
+      <p>Stockfish es un motor de ajedrez gratuito y de código abierto (gratis, y cualquiera puede ver cómo está hecho), uno de los más fuertes del mundo. El programa lo descarga solo y lo usa para que puedas jugar <b>contra la computadora</b> en 4 niveles de dificultad.</p>
     </div>
   </div>
 
@@ -255,7 +316,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
 <!-- ============ 2. CONCEPTOS ============ -->
 <section id="basico" class="reveal">
   <div class="sec-head"><div class="ic">🧠</div><h2>2. Conceptos básicos para entender el proyecto</h2></div>
-  <p class="lead">Si la programación se te hace difícil, empieza por aquí. Estas son las palabras que aparecen una y otra vez en el código, explicadas sin tecnicismos.</p>
+  <p class="lead">Si la programación se te hace difícil, empieza por aquí. Estas son las palabras que aparecen una y otra vez en el código, explicadas sin tecnicismos. <b>No hace falta aprenderlas de memoria</b>: lee las que te llamen la atención y, si más adelante se te olvida alguna, búscala en el <a href="#diccionario">diccionario de la sección 13</a>.</p>
 
   <div class="grid c3">
     <div class="item"><h4>C#</h4><p>El lenguaje de programación que se usa (se pronuncia "C sharp"). Es como escribir una receta de cocina que la computadora entiende y ejecuta.</p></div>
@@ -342,7 +403,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
 
   <h3>🪟 Las ventanas (formularios)</h3>
   <div class="grid c2">
-    <div class="item"><h4>LOGIN <span class="tag t-gold">la puerta de entrada</span></h4><p>Pide usuario y contraseña. Primero intenta verificarlos en la nube (Supabase) con una conexión directa a PostgreSQL. Si no hay internet, valida contra la copia local guardada en tu PC, así que <b>también funciona sin conexión</b> si ya te habías entrado antes. Guarda tu usuario en la memoria del programa (<code>Sesion.cs</code>).</p></div>
+    <div class="item"><h4>LOGIN <span class="tag t-gold">la puerta de entrada</span></h4><p>Pide usuario y contraseña. Primero intenta verificarlos en la nube (Supabase) con una conexión directa a <b>PostgreSQL</b> (otro tipo de base de datos, el que usa Supabase por dentro). Si no hay internet, valida contra la copia local guardada en tu PC, así que <b>también funciona sin conexión</b> si ya te habías entrado antes. Guarda tu usuario en la memoria del programa (<code>Sesion.cs</code>).</p></div>
     <div class="item"><h4>REGISTRADOR <span class="tag t-gold">alta de usuarios</span></h4><p>Comprueba que el nombre no esté repetido y añade el usuario nuevo a la tabla <code>usuarios</code> de la nube. Además deja una copia local de la credencial con contraseña "hasheada" (convertida en código ilegible con SHA-256) para el modo sin internet.</p></div>
     <div class="item"><h4>menu <span class="tag t-gold">el centro de mando</span></h4><p>Muestra tu foto, tu ELO y tus victorias. De aquí salen los botones: AJEDREZ, DAMAS, PARTIDAS, PERFIL, CRÉDITOS y el botón ADMIN (que solo aparece si eres administrador). También busca si dejaste una partida <b>en curso</b> y te pregunta si quieres continuarla. Al abrirse lanza la sincronización en segundo plano y muestra el botón "VERSION MOVIL" con un <b>código QR</b>.</p></div>
     <div class="item"><h4>NombresPartida <span class="tag t-gold">antes de jugar</span></h4><p>Un diálogo donde escribes el nombre de los dos jugadores, eliges de qué color juegas, si es contra la IA (con nivel Fácil / Media / Difícil / Experto) y, en damas, el modo "soplar".</p></div>
@@ -352,7 +413,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
     <div class="item"><h4>Perfil <span class="tag t-green">tu identidad</span></h4><p>Aquí subes tu <b>foto de perfil</b> (se guarda en Supabase Storage, con máximo 5 MB), editas tu correo, tu descripción (máximo 50 caracteres) y ves tu ELO y estadísticas.</p></div>
     <div class="item"><h4>AdminPanel + UsuarioEditor <span class="tag t-orange">zona del jefe</span></h4><p>Panel con tres pestañas (Usuarios, Partidas, Movimientos) para gestionar <b>todo</b> lo que hay en la nube: crear, editar y borrar usuarios, resetear contraseñas, filtrar partidas por jugador/resultado/fechas y borrar movimientos. Solo pueden entrar los administradores.</p></div>
     <div class="item"><h4>Creditos <span class="tag t-purple">agradecimientos</span></h4><p>Una ventana modal (flota sobre las demás) con las palabras de agradecimiento a Jonathan Palacios y al profesor.</p></div>
-    <div class="item"><h4>FormQR <span class="tag t-purple">puente al celular</span></h4><p>Genera con la librería QRCoder un código QR con la dirección de la versión web (<span class="mono">http://ajedrez-2026.somee.com</span>). Con escanearlo con el celular ya puedes jugar en el teléfono.</p></div>
+    <div class="item"><h4>FormQR <span class="tag t-purple">puente al celular</span></h4><p>Genera con la librería QRCoder (un programa auxiliar hecho por otros) un código QR con la dirección de la versión web (<span class="mono">http://ajedrez-2026.somee.com</span>). Con escanearlo con el celular ya puedes jugar en el teléfono.</p></div>
     <div class="item"><h4>Movimientos <span class="tag t-red">vacío</span></h4><p>Es un formulario "fantasma": solo tiene la ventana vacía y no hace nada. Quedó del diseño inicial; la pantalla que realmente muestra las partidas es <code>Partidas</code>.</p></div>
   </div>
 
@@ -469,7 +530,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
   </div>
   <ul class="list">
     <li>La sincronización arranca sola al abrir el menú, al pulsar ACTUALIZAR o SINCRONIZAR, y tras cada partida que se guarda.</li>
-    <li>Se ejecuta en un hilo aparte (<code>Task.Run</code>) para que la ventana no se congele.</li>
+    <li>Se ejecuta en un proceso aparte (en segundo plano, con <code>Task.Run</code>) para que la ventana no se congele mientras trabaja.</li>
     <li><b>Regla de conflicto sencilla:</b> si hay cambios locales sin subir, manda tu PC; si no, manda la nube.</li>
     <li>Si algo falla (por ejemplo, se corta internet), <b>no se pierde nada</b>: queda como "pendiente" y se reintenta la próxima vez.</li>
   </ul>
@@ -502,7 +563,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
 <!-- ============ 8. WEB ============ -->
 <section id="web" class="reveal">
   <div class="sec-head"><div class="ic">🌐</div><h2>8. La aplicación web (ASPX), explicada igual de fácil</h2></div>
-  <p class="lead">La versión web hace lo mismo que la de escritorio, pero cada pantalla es una <b>página</b> que el servidor convierte en HTML para el navegador. Está publicada en <span class="mono">http://ajedrez-2026.somee.com</span> (hosting gratuito Somee) y es la que apunta el QR del menú.</p>
+  <p class="lead">La versión web hace lo mismo que la de escritorio, pero cada pantalla es una <b>página</b> que el servidor convierte en HTML para el navegador. Está publicada (alojada en un servidor gratuito) en <span class="mono">http://ajedrez-2026.somee.com</span> con el servicio Somee, y es la que apunta el QR del menú.</p>
 
   <h3>🧭 Las páginas</h3>
   <div class="grid c2">
@@ -510,7 +571,7 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
     <div class="item"><h4>Registro.aspx <span class="tag t-blue">alta</span></h4><p>Comprueba si el nombre ya existe y crea el usuario. Luego te manda al login con el nombre ya rellenado.</p></div>
     <div class="item"><h4>Menu.aspx <span class="tag t-blue">principal</span></h4><p>Foto, ELO y victorias. Como en el escritorio, pregunta si quieres continuar una partida que dejaste a medias.</p></div>
     <div class="item"><h4>NuevaPartida.aspx <span class="tag t-blue">configuración</span></h4><p>Eliges tipo de juego, colores, IA con nivel, o modo soplar en damas.</p></div>
-    <div class="item"><h4>Ajedrez.aspx <span class="tag t-gold">tablero web</span></h4><p>El tablero se dibuja con una tabla HTML y botones por casilla. Usa <b>AJAX</b> (UpdatePanel + Timer) para que al mover una pieza no se recargue toda la página y la IA pueda pensar sin congelar el navegador.</p></div>
+    <div class="item"><h4>Ajedrez.aspx <span class="tag t-gold">tablero web</span></h4><p>El tablero se dibuja con una tabla HTML y botones por casilla. Usa <b>AJAX</b> (una técnica que actualiza solo la parte que cambia, en vez de recargar la página entera; aquí se hace con <code>UpdatePanel</code> y <code>Timer</code>) para que al mover una pieza no se pierda lo que ya estaba en pantalla y la IA pueda pensar sin congelar el navegador.</p></div>
     <div class="item"><h4>Damas.aspx <span class="tag t-gold">damas web</span></h4><p>Con las mismas reglas que en escritorio: capturas múltiples, coronación y modo soplar.</p></div>
     <div class="item"><h4>Partidas.aspx <span class="tag t-green">historial</span></h4><p>Lista de partidas con filtros (todas/victorias/derrotas/empates/fecha), winrate y un desplegable para ver los movimientos de cada partida.</p></div>
     <div class="item"><h4>Perfil.aspx <span class="tag t-green">perfil</span></h4><p>La página que más "nube" usa: sube la foto al Storage, borra la anterior, actualiza correo, nombre y descripción. Máximo 5 MB.</p></div>
@@ -565,14 +626,14 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
 
   <h3>🛠️ El proceso, paso a paso</h3>
   <div class="flow">
-    <div class="n">1. Compilar en Release<small>MSBuild crea Ajedrez.exe + librerías</small></div><div class="a">→</div>
+    <div class="n">1. Compilar en Release<small>convertir el código en Ajedrez.exe (MSBuild)</small></div><div class="a">→</div>
     <div class="n">2. Inno Setup<small>empaqueta todo en un solo .exe</small></div><div class="a">→</div>
     <div class="n">3. Ajedrez-Setup-1.1.0.exe<small>25 MB, se copia a cualquier PC</small></div><div class="a">→</div>
     <div class="n">4. Instalar<small>menú Inicio + escritorio + desinstalador</small></div>
   </div>
 
   <ul class="list">
-    <li><b>Un solo comando:</b> ejecutando <code>instalador\compilar-instalador.ps1</code> se compila el juego y se genera el instalador en la carpeta <code>dist</code>.</li>
+    <li><b>Un solo comando:</b> ejecutando <code>instalador\compilar-instalador.ps1</code> (un script, o sea un archivo con instrucciones para Windows) se compila el juego y se genera el instalador en la carpeta <code>dist</code>.</li>
     <li><b>El instalador comprueba</b> que la PC tenga .NET Framework 4.7.2 o superior. En Windows 10 y 11 ya viene de fábrica, así que no hay que instalar nada.</li>
     <li><b>Adónde instala:</b> a <code>C:\Program Files\Ajedrez</code>. Los datos (partidas, foto, Stockfish) se guardan en tu carpeta de usuario, no en Program Files.</li>
     <li><b>Desinstalar:</b> aparece en "Aplicaciones y características" de Windows, con su desinstalador propio.</li>
@@ -597,17 +658,75 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
 <section id="mejoras" class="reveal">
   <div class="sec-head"><div class="ic">🚀</div><h2>12. Cosas que se podrían mejorar (honestamente)</h2></div>
   <p class="lead">Toda programación se puede mejorar. Estos son los puntos que cualquier desarrollador notaría, escritos con franqueza para que sepas hacia dónde crece el proyecto.</p>
-  <div class="warn"><b>Seguridad de las contraseñas:</b> en la nube, la contraseña se guarda y se compara en <b>texto plano</b> (en la tabla <code>usuarios</code>). Lo ideal es guardarlas "hasheadas" con bcrypt o Argon2, como ya hace la copia local con SHA-256.</div>
-  <div class="warn"><b>Claves en el código:</b> la dirección y la clave de Supabase, y las credenciales de PostgreSQL, están escritas dentro de los archivos del código. En un proyecto profesional se guardan fuera del código, en "variables de entorno" o en la configuración del servidor.</div>
+  <div class="warn"><b>Seguridad de las contraseñas:</b> en la nube, la contraseña se guarda tal cual, en <b>texto plano</b> (es decir, si alguien mira la tabla <code>usuarios</code> podría leerla). Lo ideal es guardar solo su "huella" ilegible (una <i>contraseña hasheada</i>) con métodos modernos como bcrypt o Argon2, tal como ya lo hace la copia local con SHA-256.</div>
+  <div class="warn"><b>Claves en el código:</b> la dirección y la clave de Supabase, y los datos de acceso a PostgreSQL, están escritos dentro de los archivos del programa. Si el código se publica, cualquiera podría verlos. En un proyecto profesional se guardan fuera del código, en archivos de configuración del servidor que no se comparten.</div>
   <ul class="list">
     <li><b>Panel admin:</b> en la lista de usuarios se muestra la columna de la contraseña. Sería mejor ocultarla por completo.</li>
-    <li><b>Permisos en la nube:</b> con la clave pública (anon) abierta, la protección real depende de las políticas RLS configuradas en Supabase. Convendría revisarlas.</li>
+    <li><b>Permisos en la nube:</b> cualquiera con la clave pública (anon) puede conectarse a la base de datos; la protección real depende de las reglas de permisos (las <b>políticas RLS</b>) configuradas en Supabase. Convendría revisarlas.</li>
     <li><b>Formulario "Movimientos":</b> está vacío y sin usar; se podría borrar del escritorio.</li>
     <li><b>Carpeta bin/ en git:</b> el repositorio guarda compilaciones y unos ejecutables de prueba pequeños (<code>z2.exe</code>, <code>check2.exe</code>...) que no son el juego. Limpiarlos haría el proyecto más ordenado.</li>
     <li><b>Eficiencia:</b> algunas consultas (como comprobar si existe un usuario) descargan listas completas para comparar en memoria; sería mejor filtrar en la base de datos.</li>
     <li><b>Damas sin IA:</b> sería un gran añadido usar un motor como “Fairy-Stockfish” para jugar contra la máquina también en damas.</li>
     <li><b>Instalador firmado:</b> hoy Windows puede mostrar el aviso "aplicación desconocida". Con un certificado de firma digital, el instalador inspiraría confianza.</li>
   </ul>
+</section>
+
+<!-- ============ 13. DICCIONARIO ============ -->
+<section id="diccionario" class="reveal">
+  <div class="sec-head"><div class="ic">🔎</div><h2>13. Diccionario fácil: todas las palabras técnicas</h2></div>
+  <p class="lead">¿Te salió una palabra que no entendiste? Búscala aquí. Están ordenadas de la A a la la Z y escritas lo más simple posible: si aquí no está, no importa, con que escribas una parte de la palabra aparecerán las parecidas.</p>
+
+  <div class="gsearch">
+    <input id="gSearch" type="search" placeholder="Escribe una palabra: «nube», «ELO», «instalador», «contraseña»…" aria-label="Buscar una palabra en el diccionario">
+    <span class="gcount" id="gCount" aria-live="polite"></span>
+  </div>
+
+  <div class="grid c2" id="glosario">
+    <div class="item"><h4>.NET Framework</h4><p>El conjunto de herramientas de Windows que necesitan los programas escritos en C#. Ya viene instalado en Windows 10 y 11, por eso el juego funciona sin instalar nada extra.</p></div>
+    <div class="item"><h4>.aspx / .cs / .slnx</h4><p>Son extensiones de archivo. <code>.aspx</code> = una página web. <code>.cs</code> = instrucciones del programa. <code>.slnx</code> = la "solución", el índice que agrupa todos los proyectos.</p></div>
+    <div class="item"><h4>Administrador</h4><p>Usuario con permisos extras. En este proyecto no hay una lista de permisos en la base de datos: hay una lista de nombres escrita en el código (<code>Administradores.cs</code>) y, si tu usuario está ahí, te aparece el botón ADMIN.</p></div>
+    <div class="item"><h4>AJAX</h4><p>Técnica web para actualizar solo una parte de la página sin recargarla entera. Gracias a esto, al mover una pieza no se "parpadea" la pantalla y la IA puede pensar sin trabar el navegador.</p></div>
+    <div class="item"><h4>API</h4><p>Una "ventanita" por la que un programa pide información a otro. En este caso, la que usa el juego para hablar con la nube (Supabase) mediante direcciones web.</p></div>
+    <div class="item"><h4>ASP.NET / Windows Forms</h4><p>Dos formas de crear pantallas con C#. <b>Windows Forms</b> = ventanas que se instalan en el PC. <b>ASP.NET</b> = páginas que se abren en el navegador.</p></div>
+    <div class="item"><h4>Base de datos</h4><p>Un almacén de información ordenada en <b>tablas</b> (filas y columnas), como un Excel. Aquí guarda usuarios, partidas y movimientos.</p></div>
+    <div class="item"><h4>C#</h4><p>El lenguaje en que está escrito todo el proyecto (se pronuncia "C sharp"). Es la "receta" que la computadora lee y ejecuta.</p></div>
+    <div class="item"><h4>Código abierto</h4><p>Programa gratuito cuyo código fuente cualquiera puede ver, copiar y modificar. Stockfish es de código abierto.</p></div>
+    <div class="item"><h4>Compilar</h4><p>Convertir el código (texto que escriben los programadores) en un programa que Windows puede ejecutar (<code>.exe</code> o <code>.dll</code>). Sin compilar, el juego no corre.</p></div>
+    <div class="item"><h4>Contraseña hasheada</h4><p>Guardar la contraseña convertida en un texto ilegible imposible de revertir (una "huella"). Así, aunque alguien vea la base de datos, no puede leer tu contraseña.</p></div>
+    <div class="item"><h4>Coronación</h4><p>En ajedrez, cuando un peón llega al otro extremo del tablero y se convierte en dama, torre, alfil o caballo. En damas, la ficha que se corona se mueve por toda la diagonal.</p></div>
+    <div class="item"><h4>ELO</h4><p>El sistema de puntuación que usan los ajedrecistas del mundo real. Aquí empiezas con <b>800 puntos</b> y subes o bajas según quién gana: ganarle a alguien fuerte vale más.</p></div>
+    <div class="item"><h4>Enroque</h4><p>Jugada especial en la que el rey se mueve dos casillas hacia el lado y la torre salta a su lado. Solo se puede hacer si ninguno se movió antes y el camino está libre.</p></div>
+    <div class="item"><h4>Evento</h4><p>Algo que ocurre en la pantalla y hace que el programa reaccione: "el usuario hizo clic en el botón A" → se abre la ventana B.</p></div>
+    <div class="item"><h4>FEN</h4><p>Una cadena de texto que fotografía el tablero completo tal como está en ese momento (qué pieza hay en cada casilla y de quién es el turno). Es lo que se le pasa a la IA para que piense.</p></div>
+    <div class="item"><h4>Hosting / servidor web</h4><p>Una computadora ajena, encendida 24 horas, que guarda y sirve las páginas web. La versión web de este proyecto está alojada gratis en Somee.</p></div>
+    <div class="item"><h4>Instalador</h4><p>Un archivo <code>.exe</code> que copia el juego en la PC, crea el acceso directo en el menú Inicio y deja un desinstalador. Se manda un solo archivo en vez de todo el código.</p></div>
+    <div class="item"><h4>Jaque y jaque mate</h4><p><b>Jaque:</b> tu rey está amenazado y debes salvarlo. <b>Jaque mate:</b> el rey no tiene ninguna salida y la partida termina ahí.</p></div>
+    <div class="item"><h4>JSON</h4><p>Formato de texto para guardar información ordenada. Aquí se usa para guardar el tablero entero y poder retomar la partida después.</p></div>
+    <div class="item"><h4>Librería / paquete (NuGet)</h4><p>Código hecho por otras personas que se "presta" para no reinventar la rueda. NuGet es la tienda de donde se descargan; quedan en la carpeta <code>packages</code>.</p></div>
+    <div class="item"><h4>Memoria</h4><p>Lo que el programa recuerda mientras está abierto (quién entró, en qué pantalla vas). Se borra en cuanto cierras el juego; para guardar algo para siempre se usa la base de datos.</p></div>
+    <div class="item"><h4>Notación</h4><p>La forma estándar de escribir las jugadas (<code>e4</code>, <code>Cf3</code>). En español se usa la inicial de la pieza: C = caballo, A = alfil, T = torre, D = dama, R = rey.</p></div>
+    <div class="item"><h4>Panel de administración</h4><p>Pantalla reservada para los administradores, donde se crea, edita y borra usuarios, partidas y movimientos guardados en la nube.</p></div>
+    <div class="item"><h4>PostgreSQL</h4><p>Un tipo muy usado de base de datos. Supabase trabaja con PostgreSQL, y el inicio de sesión del escritorio se conecta a él de forma directa.</p></div>
+    <div class="item"><h4>QR (código QR)</h4><p>Aquel cuadradito de puntos negros que se escanea con la cámara del celular. Aquí contiene la dirección de la versión web, para jugar desde el teléfono.</p></div>
+    <div class="item"><h4>Registro (alta)</h4><p>El proceso de crear un usuario nuevo: eliges nombre y contraseña y el programa los guarda en la base de datos, comprobando que no exista ya ese nombre.</p></div>
+    <div class="item"><h4>Repositorio</h4><p>La carpeta del proyecto guardada junto con todo su historial de cambios (git). "Repositorio" y "carpeta del proyecto" casi siempre significan lo mismo.</p></div>
+    <div class="item"><h4>RLS (políticas de permisos)</h4><p>Reglas dentro de Supabase que deciden quién puede leer, escribir o borrar cada tabla. Si están bien puestas, nadie puede tocar tus datos desde afuera.</p></div>
+    <div class="item"><h4>Script</h4><p>Un archivo con instrucciones escritas para que Windows las ejecute paso a paso, como una receta automática. Ejemplo: <code>compilar-instalador.ps1</code>.</p></div>
+    <div class="item"><h4>Sesión</h4><p>El "carnet" temporal que demuestra que iniciaste sesión. Mientras dure, el programa no te vuelve a pedir usuario y contraseña.</p></div>
+    <div class="item"><h4>Sincronizar (push / pull)</h4><p>Dejar igual tu PC y la nube. <b>Push (subir)</b> manda lo que hiciste sin conexión; <b>pull (bajar)</b> trae lo nuevo que hay en la nube.</p></div>
+    <div class="item"><h4>SQLite</h4><p>Base de datos que cabe en un solo archivo dentro de tu PC y funciona <b>sin internet</b>. Guarda tus partidas localmente en <code>%AppData%\Ajedrez</code>.</p></div>
+    <div class="item"><h4>Stockfish</h4><p>El motor (la "máquina") que calcula jugadas para jugar contra la computadora. Se le envía la posición y él responde con el mejor movimiento.</p></div>
+    <div class="item"><h4>Storage (almacén de archivos)</h4><p>Parte de Supabase que guarda archivos sueltos, no tablas: aquí viven las fotos de perfil, en el cubo llamado <code>perfiles</code>.</p></div>
+    <div class="item"><h4>Supabase</h4><p>La base de datos en internet (nube) que usan las dos versiones del juego. Lo que guardas ahí lo ves desde cualquier computadora o celular.</p></div>
+    <div class="item"><h4>Tabla</h4><p>Cada uno de los "libros" dentro de una base de datos, con filas y columnas. Las principales aquí son <code>usuarios</code>, <code>partidas</code> y <code>movimientos</code>.</p></div>
+    <div class="item"><h4>Tema claro / oscuro</h4><p>Los dos estilos visuales del juego: fondo blanco o fondo azul muy oscuro. Se cambian con un botón y el programa recuerda la elección.</p></div>
+    <div class="item"><h4>UCI</h4><p>El "idioma" en que el programa le habla a Stockfish (poner el nivel, enviar el tablero, pedir el movimiento). Como hablar por walkie-talkie.</p></div>
+    <div class="item"><h4>URL / dirección web</h4><p>El texto que va en la barra del navegador, por ejemplo <span class="mono">http://ajedrez-2026.somee.com</span>. También es lo que se guarda en la base de datos cuando subes una foto.</p></div>
+    <div class="item"><h4>Ventana modal</h4><p>Una ventana que aparece encima de las demás y no te deja usar el programa hasta que la cierras. Ejemplo: la de créditos.</p></div>
+    <div class="item"><h4>Winrate</h4><p>Porcentaje de partidas ganadas. Se muestra en tu historial: si ganaste 7 de 10, tu winrate es del 70%.</p></div>
+  </div>
+
+  <div class="tip"><b>¿No aparece la palabra?</b> Mírala también en la <a href="#basico">sección 2 (Conceptos básicos)</a>: ahí los términos vienen con ejemplos del propio juego.</div>
 </section>
 
 <footer>
@@ -625,14 +744,35 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
   var btn=document.getElementById('themeBtn');
   var root=document.body;
 
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+
   // Tema
-  if(localStorage.getItem('temaAjedrez')==='light'){root.classList.add('light');btn.textContent='🌙 Modo oscuro';}
+  if(lsGet('temaAjedrez')==='light'){root.classList.add('light');btn.textContent='🌙 Modo oscuro';}
   btn.addEventListener('click',function(){
     root.classList.toggle('light');
     var light=root.classList.contains('light');
     btn.textContent=light?'🌙 Modo oscuro':'☀️ Modo claro';
-    localStorage.setItem('temaAjedrez',light?'light':'dark');
+    lsSet('temaAjedrez',light?'light':'dark');
   });
+
+  // Tamaño de letra (A- / A+)
+  var sizes=[87.5,100,112.5,125];
+  var lvl=parseInt(lsGet('tamFuenteAjedrez'),10);
+  if(isNaN(lvl)||lvl<0||lvl>=sizes.length) lvl=1;
+  var fUp=document.getElementById('fontUp'),
+      fDown=document.getElementById('fontDown'),
+      fVal=document.getElementById('fontLvl');
+  function applyFont(){
+    document.documentElement.style.fontSize=sizes[lvl]+'%';
+    fVal.textContent=sizes[lvl]+'%';
+    fUp.disabled=(lvl>=sizes.length-1);
+    fDown.disabled=(lvl<=0);
+    lsSet('tamFuenteAjedrez',lvl);
+  }
+  fUp.addEventListener('click',function(){lvl++;applyFont();});
+  fDown.addEventListener('click',function(){lvl--;applyFont();});
+  applyFont();
 
   // Barra de progreso
   function onScroll(){
@@ -652,10 +792,32 @@ footer .pieces{font-size:26px;letter-spacing:14px;margin-bottom:10px}
   onScroll();
 
   // Aparición suave
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);} });
-  },{threshold:.08});
-  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  var all=[].slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);} });
+    },{threshold:.08});
+    all.forEach(function(el){io.observe(el);});
+  }else{
+    all.forEach(function(el){el.classList.add('on');});
+  }
+
+  // Diccionario con búsqueda
+  var gIn=document.getElementById('gSearch'),
+      gOut=document.getElementById('gCount'),
+      gItems=[].slice.call(document.querySelectorAll('#glosario .item'));
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  function filtrar(){
+    var q=norm(gIn.value.trim()), n=0;
+    gItems.forEach(function(it){
+      var ok=!q||norm(it.textContent).indexOf(q)>-1;
+      it.classList.toggle('hide',!ok);
+      if(ok)n++;
+    });
+    gOut.textContent=q?(n+' de '+gItems.length+' palabras'):gItems.length+' palabras';
+  }
+  gIn.addEventListener('input',filtrar);
+  filtrar();
 })();
 </script>
 </body>
