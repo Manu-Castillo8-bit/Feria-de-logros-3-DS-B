@@ -7,7 +7,7 @@
 <meta name="description" content="Un programa para Windows con ajedrez y damas. Descárgalo en .exe o juega directamente desde el navegador.">
 <!--
   PERSONALIZA ESTO:
-  1) Botón "Descargar .exe": cambia href="juego.exe" por la ruta/URL de tu archivo.
+  1) Botón "Descargar .exe": apunta al release de GitHub v1.1.0.
   2) Botón "Jugar en línea": actualizado a http://ajedrez-2026.somee.com/
 -->
 <style>
@@ -50,6 +50,8 @@ header{padding:22px 0}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
 .btn:hover{transform:translateY(-2px)}
 .btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.documentation-btn{border-color:#c49a27;background:linear-gradient(135deg,rgba(245,197,66,.16),rgba(110,168,255,.10));font-weight:750}
+.documentation-btn:hover{box-shadow:0 8px 24px rgba(196,154,39,.22)}
 .note{font-size:14px;color:var(--muted);margin:18px 0 0;max-width:36em}
 
 /* TABLEROS */
@@ -104,13 +106,17 @@ footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--muted);f
       <h1>Ajedrez y damas, en un solo programa.</h1>
       <p class="lead">Es un programa para Windows con dos juegos clásicos de tablero. Cualquiera puede jugar: descárgalo en tu computadora o ábrelo directamente desde el navegador.</p>
       <div class="btns">
-        <a class="btn primary" href="juego.exe" download>
+        <a class="btn primary" href="https://github.com/Manu-Castillo8-bit/Ajedrez-2026/releases/download/v1.1.0/Ajedrez-Setup-1.1.0.exe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
           Descargar .exe
         </a>
         <a class="btn ghost" href="http://ajedrez-2026.somee.com/" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 001.5.86l12-7.5a1 1 0 000-1.72l-12-7.5A1 1 0 007 4.5z"/></svg>
           Jugar en línea
+        </a>
+        <a class="btn ghost documentation-btn" href="ajedrez_documentacion.html" aria-label="Leer la documentación del proyecto de ajedrez y damas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h8"/></svg>
+          📘 Ver documentación
         </a>
       </div>
       <p class="note">Si Windows muestra una advertencia al abrir el archivo, elige «Más información» y luego «Ejecutar de todas formas».</p>
@@ -149,7 +155,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--muted);f
             <li>Ábrelo con doble clic.</li>
             <li>Elige ajedrez o damas y empieza.</li>
           </ol>
-          <a class="btn primary" href="juego.exe" download>
+          <a class="btn primary" href="https://github.com/Manu-Castillo8-bit/Ajedrez-2026/releases/download/v1.1.0/Ajedrez-Setup-1.1.0.exe">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
             Descargar .exe
           </a>
